@@ -20,7 +20,7 @@ def list_view(request):
 	Picture.picture_owner=request.user
 	current_user_id=request.user.id
 	picture=Picture.objects.all()
-	latest_picture_list=Picture.objects.filter(picture_owner_id=current_user_id).order_by('-pub_date')[:12]
+	latest_picture_list=Picture.objects.filter(picture_owner_id=current_user_id).order_by('-pub_date')[:]
 	lst = []
 	for i in latest_picture_list:
 		if i.picture:
