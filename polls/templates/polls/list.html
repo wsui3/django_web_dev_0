@@ -1,0 +1,16 @@
+<h1>Welcome,{{ user.username }}</h1>
+<li><a href="http://127.0.0.1:8000/polls/accounts/logout/">logout</a></li>
+<li><a href="http://127.0.0.1:8000/polls/login/">login</a></li>
+{% if latest_picture_list %}
+  <ul>
+  {% for item in latest_picture_list %}
+  	<img src="{{ item.picture.url }}" height="350" width="350" />
+  	<label>{{ item.picture_text }}</label>
+  {% endfor %}
+  
+  </ul>
+{% else %}
+    <p>No picture are available.</p>
+{% endif %}
+<li><a href="http://127.0.0.1:8000/polls/upload/">Add another picture.</a></li>
+<li><a href="http://127.0.0.1:8000/polls/user/">User Center</a></li>

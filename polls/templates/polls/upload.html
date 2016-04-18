@@ -1,0 +1,12 @@
+<form id="picture_form" name="upload" action="/polls/upload_image/" enctype="multipart/form-data" method="post">
+{% csrf_token %}
+	<fieldset value="select_picture_file">
+		<legend>Upload your picture.</legend>
+		<label for="picture_title">Picture title:</label>
+		<input type="text" name="picture_title"></input>
+		<label for="picture_text">Picture text:</label>
+		<input type="text" name="picture_text"></input>
+		<input type="file" name="picfile" id="picfile"></input>
+		<input type="submit" value="submit"></input>
+	</fieldset>
+</form>

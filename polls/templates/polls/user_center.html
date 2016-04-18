@@ -1,0 +1,14 @@
+<h1>User Center of {{ user.username }}</h1>
+<label for="gender">Gender:</label>
+<label name="gender">{{ caruser.gender }}</label>
+<br />
+<label for="self_introduce">Self Introduce:</label>
+<p name="self_introduce">{{ caruser.self_introduce }}</p>
+<br />
+<label for="birthday">Birthday:</label>
+<label name="birthday">{{ caruser.birthday }}</label>
+<br /><br />
+<li>
+	<a href="http://127.0.0.1:8000/polls/user/edit/">Edit</a>
+</li>
+<li><a href="http://127.0.0.1:8000/polls/accounts/logout/">logout</a></li>

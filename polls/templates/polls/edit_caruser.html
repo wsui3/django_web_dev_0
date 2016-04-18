@@ -1,0 +1,35 @@
+<head>
+  	<meta charset="utf-8">
+  	<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+  	<script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+  	<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+  	<!-- <link rel="stylesheet" href="jqueryui/style.css"> -->
+  	<script>
+	  	$(function() {
+	    	$( "#datepicker" ).datepicker({
+	      		showOtherMonths: true,
+	      		selectOtherMonths: true
+	    	});
+	  	});
+  	</script>
+</head>
+<h1>{{ user.username }},you can edit your account message here.</h1>
+<form action="/polls/user/edit/" id="edit_caruser" name="upload" enctype="multipart/form-data" method="post">
+{% csrf_token %}
+	<label for="gender">Gender:</label>
+	<div class="group">
+		<input type="radio" name="gender" value="male"> Male
+	  	<input type="radio" name="gender" value="female"> Female
+	  	<input type="radio" name="gender" value="other"> Other
+	</div>
+	<br />
+	<label for="birthday">Birthday:</label>
+	<input type="text" id="datepicker"></input>
+	<br /><br />
+	<label for="self_introduce">Self-introduce:</label>
+	<br />
+	<textarea rows="20" cols="120" name="self_introduce" onfocus="this.value='';this.onfocus=null;" style="color:#AAAAAA;">Input your self-introduce here.</textarea>
+	<br />
+	<input type="submit" value="submit"></input>
+	<input type="hidden" name="next" value="{{ next|escape }}" />
+</form>
