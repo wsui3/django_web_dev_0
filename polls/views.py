@@ -17,6 +17,7 @@ def index(request):
 	return render(request,'polls/index.html')
 
 def list_view(request):
+	# test comments
 	Picture.picture_owner=request.user
 	current_user_id=request.user.id
 	picture=Picture.objects.all()
