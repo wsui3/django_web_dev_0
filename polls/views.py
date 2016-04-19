@@ -120,7 +120,6 @@ def update_caruser(request):
 	CarUser.caruser=request.user
 	current_user_id=request.user.id
 	current_caruser_list=CarUser.objects.filter(caruser_id=current_user_id)
-	print form
 	if form.is_valid():#if the data is legal.
 		gender=form.cleaned_data['gender']
 		birthday=form.cleaned_data['birthday']
