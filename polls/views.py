@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404,render,render_to_response
+from django.shortcuts import get_object_or_404,render
 from django.http import HttpResponseRedirect,HttpResponse, FileResponse
 from django.core.urlresolvers import reverse
 from django.views import generic
@@ -21,7 +21,7 @@ def list_view(request):
 	Picture.picture_owner=request.user
 	current_user_id=request.user.id
 	picture=Picture.objects.all()
-	latest_picture_list=Picture.objects.filter(picture_owner_id=current_user_id).order_by('-pub_date')[:]
+	latest_picture_list=Picture.objects.filter(picture_owner_id=current_user_id).order_by('-pub_date')
 	lst = []
 	for i in latest_picture_list:
 		if i.picture:
@@ -79,7 +79,7 @@ def upload_image(request):
 		picture_title = picturetitle,
 		picture_text = picturetext)
 	s.save()
-	return HttpResponse('OK')
+	return HttpResponse("OK")
 
 def get_image_temp(request):
 	lst = Picture.objects.all()
@@ -96,39 +96,47 @@ def get_media_file(request, file_path):
 #show user center
 @login_required(login_url='/polls/login/')
 def user_center(request):
-	# try:
-	# 	caruser_obj=request.user
-	# 	print caruser_obj
-	# 	#CarUser.caruser=request.user
-	# except CarUser.DoesNotExist:
-	# 	return HttpResponseRedirect('create_caruser')
-	# if public_caruser_field is not None and not getattr(caruser_obj,public_caruser_field):
-	# 	caruser_obj=None
-	# if extra_context is None:
-	# 	extra_context={}
-	# 	context=RequestContext(request)
-	# 	for key,value in extra_context.items():
-	# 		context[key]=callable(value) and value() or value
-	# return render_to_response(template_name,{'caruser':caruser_obj},context_instance=context)
 	CarUser.caruser=request.user
-	print request.user
+	current_user_id=request.user.id
+	current_caruser_list=CarUser.objects.filter(caruser_id=current_user_id)
 	caruser=CarUser.objects.all()
-	print caruser
-	return render(request,'polls/user_center.html')
+	context={'current_caruser_list':current_caruser_list}
+
+	return render(request,'polls/user_center.html',context)
 
 #create caruser
 @login_required(login_url='/polls/login/')
-def create_caruser(request):
-	form=CarUserForm(request.POST)
-	if form.is_valid():
-		gender_get=form.cleaned_data['gender']
-		birthday_get=form.cleaned_data['birthday']
-		self_introduce_get=form.cleaned_data['self_introduce']
-	info=CarUser(
-		gender=gender_get,
-		birthday=birthday_get,
-		caruser=request.user,
-		self_introduce=self_introduce_get,
-		)
-	info.save()
-	return render(request,'polls/edit_caruser.html')
+def edit_caruser(request):
+	CarUser.caruser=request.user
+	current_user_id=request.user.id
+	current_caruser_list=CarUser.objects.filter(caruser_id=current_user_id)
+	caruser=CarUser.objects.all()
+	context={'current_caruser_list':current_caruser_list}
+	return render(request,'polls/edit_caruser.html',context)
+
+@require_POST
+def update_caruser(request):
+	form=CarUserForm(request.POST)#form include the data we have submited.
+	CarUser.caruser=request.user
+	current_user_id=request.user.id
+	current_caruser_list=CarUser.objects.filter(caruser_id=current_user_id)
+	print form
+	if form.is_valid():#if the data is legal.
+		gender=form.cleaned_data['gender']
+		birthday=form.cleaned_data['birthday']
+		self_introduce=form.cleaned_data['self_introduce']
+		s=CarUser(
+			gender=gender,
+			birthday=birthday,
+			#caruser_id=current_user_id,
+			self_introduce=self_introduce)
+		s.save()
+		return HttpResponse("OK")
+	else:
+		print form.error.as_json()
+		return HttpResponse("Something wrong with the form")
+		# form=CarUserForm()
+	# args={}
+	# args.update(request)
+
+	# args['form']=form
