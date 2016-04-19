@@ -14,9 +14,9 @@ class CarUserForm(forms.Form):
 		(u'Male',u'Male'),
 		(u'Female',u'Female'),
 	)
-	gender=forms.ChoiceField(label='gender',choices=GENDER_CHOICES,widget=forms.RadioSelect())
+	gender=forms.ChoiceField(required=False,label='gender',choices=GENDER_CHOICES,widget=forms.RadioSelect())
 	birthday=forms.DateField(required=False,label='birthday')
-	self_introduce=forms.CharField(label='self_introduce',widget=forms.Textarea({'size':10000}))
+	self_introduce=forms.CharField(required=False,label='self_introduce',widget=forms.Textarea({'size':10000}))
 	caruser=forms.CharField(required=False)
 	# gender=forms.ChoiceField(required=False,choices=GENDER_CHOICES)
 	# birthday=forms.DateField(required=False)

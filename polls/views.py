@@ -133,7 +133,7 @@ def update_caruser(request):
 		s.save()
 		return HttpResponse("OK")
 	else:
-		print form.error.as_json()
+		#print form.error.as_json()
 		return HttpResponse("Something wrong with the form")
 		# form=CarUserForm()
 	# args={}
