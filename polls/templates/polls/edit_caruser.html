@@ -55,7 +55,6 @@ $('form#caruser_form').on('submit', function (e) {
 	var form = $(this)
 	e.preventDefault()
 	var datastring = form.serialize()
-	console.log(datastring)
 
 	$.ajax({
 		url: form.attr('action'),

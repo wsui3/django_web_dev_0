@@ -96,11 +96,16 @@ def get_media_file(request, file_path):
 #show user center
 @login_required(login_url='/polls/login/')
 def user_center(request):
-	CarUser.caruser=request.user
 	current_user_id=request.user.id
+	print current_user_id
 	current_caruser_list=CarUser.objects.filter(caruser_id=current_user_id)
-	caruser=CarUser.objects.all()
-	context={'current_caruser_list':current_caruser_list}
+	if current_caruser_list:
+		current_user = current_caruser_list[0]
+	else:
+		current_user = CarUser(caruser_id=current_user_id)
+		current_user.save()
+
+	context={'current':current_user}
 
 	return render(request,'polls/user_center.html',context)
 
