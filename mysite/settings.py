@@ -124,3 +124,5 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = BASE_DIR
 
 MEDIA_URL = '/'
+
+AUTH_PROFILE_MODULE = 'polls.CarUser'

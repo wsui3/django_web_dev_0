@@ -26,11 +26,16 @@ class Picture(models.Model):
 		was_published_recently.short_description='Published recently?'
 
 class CarUser(models.Model):
-	caruser = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+	caruser = models.OneToOneField(User,default=None)
 	GENDER_CHOICES=(
-		(u'M',u'Male'),
-		(u'F',u'Female'),
+		(u'Male',u'Male'),
+		(u'Female',u'Female'),
 	)
-	gender=models.CharField(max_length=2,choices=GENDER_CHOICES)
+	gender=models.CharField(max_length=6,choices=GENDER_CHOICES)
 	self_introduce=models.CharField(max_length=10000)
 	birthday=models.DateField(null=True,max_length=20)
+
+	def __str__(self):
+		return self.caruser.username
+
+User.profile=property(lambda u: CarUser.objects.get_or_create(caruser=u)[0])

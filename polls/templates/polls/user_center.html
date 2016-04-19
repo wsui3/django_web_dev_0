@@ -1,14 +1,20 @@
 <h1>User Center of {{ user.username }}</h1>
-<label for="gender">Gender:</label>
-<label name="gender">{{ caruser.gender }}</label>
-<br />
-<label for="self_introduce">Self Introduce:</label>
-<p name="self_introduce">{{ caruser.self_introduce }}</p>
-<br />
-<label for="birthday">Birthday:</label>
-<label name="birthday">{{ caruser.birthday }}</label>
+{% if current_caruser_list %}
+	{% for item in current_caruser_list %}
+		<label for="gender">Gender:</label>
+		<label name="gender">{{ item.gender }}</label>
+		<br />
+		<label for="self_introduce">Self Introduce:</label>
+		<p name="self_introduce">{{ item.self_introduce }}</p>
+		<br />
+		<label for="birthday">Birthday:</label>
+		<label name="birthday">{{ item.birthday }}</label>
+	{% endfor %}
+{% else %}
+	<p>There's something wrong in getting CarUser.</p>
+{% endif %}
 <br /><br />
 <li>
-	<a href="http://127.0.0.1:8000/polls/user/edit/">Edit</a>
+	<a href="http://127.0.0.1:8000/polls/edit/">Edit</a>
 </li>
 <li><a href="http://127.0.0.1:8000/polls/accounts/logout/">logout</a></li>

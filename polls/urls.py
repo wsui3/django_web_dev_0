@@ -10,7 +10,8 @@ urlpatterns=[
 	url(r'^accounts/list/$',views.list_view,name='list_view'),
 	url(r'^login/$',views.login_user,name='login'),
 	url(r'^user/$',views.user_center,name='user_center'),
-	url(r'^user/edit/$',views.create_caruser,name='create_caruser'),
+	url(r'^edit/$',views.edit_caruser,name='edit_caruser'),
+	url(r'^update_caruser',views.update_caruser,name='update_caruser'),
 
 	url(r'^accounts/$',views.auth,name='auth'),
 	url(r'^accounts/index/$',views.index,name='auth_index'),

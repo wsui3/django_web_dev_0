@@ -13,23 +13,60 @@
 	  	});
   	</script>
 </head>
-<h1>{{ user.username }},you can edit your account message here.</h1>
-<form action="/polls/user/edit/" id="edit_caruser" name="upload" enctype="multipart/form-data" method="post">
+<h1>{{ user.username }},you can update your account message here.</h1>
+<form action="/polls/update_caruser" id="caruser_form" name="update_caruser" enctype="multipart/form-data" method="post">
 {% csrf_token %}
+{% if current_caruser_list %}
+	{% for item in current_caruser_list %}
+		<p>{{ item.gender }}</p>
+		<label for="gender">Gender:</label>
+		<div class="group">
+			<input type="radio" name="gender" value="male" checked="checked"> Male
+	  		<input type="radio" name="gender" value="female" > Female
+		</div>
+		<br />
+		<label for="birthday">Birthday:</label>
+		<input type="text" id="datepicker" name="birthday"></input>
+		<br /><br />
+		<label for="self_introduce">Self-introduce:</label>
+		<br />
+		<textarea rows="20" cols="120" name="self_introduce" onfocus="this.value='';this.onfocus=null;" style="color:#AAAAAA;">Input your self-introduce here.</textarea>
+	{% endfor %}
+{% else %}
 	<label for="gender">Gender:</label>
 	<div class="group">
-		<input type="radio" name="gender" value="male"> Male
-	  	<input type="radio" name="gender" value="female"> Female
-	  	<input type="radio" name="gender" value="other"> Other
+		<input type="radio" name="gender" value="Male"> Male
+	  	<input type="radio" name="gender" value="Female"> Female
 	</div>
 	<br />
 	<label for="birthday">Birthday:</label>
-	<input type="text" id="datepicker"></input>
+	<input type="text" id="datepicker" name="birthday"></input>
 	<br /><br />
 	<label for="self_introduce">Self-introduce:</label>
 	<br />
 	<textarea rows="20" cols="120" name="self_introduce" onfocus="this.value='';this.onfocus=null;" style="color:#AAAAAA;">Input your self-introduce here.</textarea>
-	<br />
-	<input type="submit" value="submit"></input>
-	<input type="hidden" name="next" value="{{ next|escape }}" />
+{% endif %}
+		<br />
+		<!-- {{ form }} -->
+		<input type="submit" value="Update"></input>
 </form>
+<script type="text/javascript">
+$('form#caruser_form').on('submit', function (e) {
+	var form = $(this)
+	e.preventDefault()
+	var datastring = form.serialize()
+	console.log(datastring)
+
+	$.ajax({
+		url: form.attr('action'),
+		type: 'post',
+		data: datastring,
+		success: function (msg, xhr) {
+			console.log(msg)
+		},
+		error: function (msg) {
+			console.log(msg)
+		}
+	})
+})
+</script>
