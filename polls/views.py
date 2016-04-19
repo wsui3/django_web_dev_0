@@ -112,29 +112,24 @@ def user_center(request):
 #create caruser
 @login_required(login_url='/polls/login/')
 def edit_caruser(request):
-	CarUser.caruser=request.user
 	current_user_id=request.user.id
 	current_caruser_list=CarUser.objects.filter(caruser_id=current_user_id)
-	caruser=CarUser.objects.all()
-	context={'current_caruser_list':current_caruser_list}
+	context={'current': current_caruser_list[0]}
 	return render(request,'polls/edit_caruser.html',context)
 
 @require_POST
 def update_caruser(request):
 	form=CarUserForm(request.POST)#form include the data we have submited.
-	CarUser.caruser=request.user
 	current_user_id=request.user.id
-	current_caruser_list=CarUser.objects.filter(caruser_id=current_user_id)
+	current_caruser=CarUser.objects.filter(caruser_id=current_user_id)[0]
 	if form.is_valid():#if the data is legal.
 		gender=form.cleaned_data['gender']
 		birthday=form.cleaned_data['birthday']
 		self_introduce=form.cleaned_data['self_introduce']
-		s=CarUser(
-			gender=gender,
-			birthday=birthday,
-			#caruser_id=current_user_id,
-			self_introduce=self_introduce)
-		s.save()
+		current_caruser.gender = gender
+		current_caruser.birthday = birthday
+		current_caruser.self_introduce = self_introduce
+		current_caruser.save()
 		return HttpResponse("OK")
 	else:
 		#print form.error.as_json()
